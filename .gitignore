@@ -3,6 +3,7 @@
 /public/storage
 /public/admission
 /storage/*.key
+/storage/framework/views
 /vendor
 /vendor2
 /.idea

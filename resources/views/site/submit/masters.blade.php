@@ -306,7 +306,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
-                                <label>@lang('main.phone2'):
+                                <label>@lang('main.phone2')<span class="text-danger">*</span>:
                                     @if($errors->has('phone2'))
                                         <span class="text-danger"> | {{ $errors->first('phone2') }}</span>
                                     @endif
@@ -657,12 +657,12 @@
                                     <span class="text-danger"> | {{ $errors->first('course_lang') }}</span>
                                 @endif
                             </label>
-                            <select class="form-control" name="course_lang">
+                            <select class="form-control study-language" name="course_lang">
                                 <option value="" style="display: none;" selected>@lang('main.select')</option>
-                                @foreach($study_languages as $lang)
+                                <!-- @foreach($study_languages as $lang)
                                     <option value="{{ $lang->id }}"
                                             @if(old('course_lang')==$lang->id) selected @endif>{{ $lang->name }}</option>
-                                @endforeach()
+                                @endforeach() -->
                             </select>
                         </div>
                     </div>
@@ -739,6 +739,26 @@
                 })
             }
         })
+        $('.speciality-select').on('change', function () {
+            var value = this.value
+            console.log(this.value)
+            getLangs(value)
+        })
+        function getLangs(value){
+            $.ajax({
+                url: '/submit/get-dir-lang-mag/' + value,
+                method: 'GET',
+            }).then(res => {
+                console.log('re', res)
+                var text = '';
+                $.each(res, function (value) {
+                    text += '<option value="' + res[value]?.id + '">' + res[value]?.name + '</option>'
+                })
+                $('.study-language').html(text)
+                $('.study-language').val(res[0]?.id)
+
+            })
+        }
         //         $('select').on('change', function() {
         //   alert( this.value );
         // });

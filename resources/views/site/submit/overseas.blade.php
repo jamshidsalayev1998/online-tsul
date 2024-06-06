@@ -259,7 +259,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>@lang('main.phone2'):
+                            <label>@lang('main.phone2') <span class="text-danger">*</span>:
                                 @if($errors->has('phone2'))
                                     <span class="text-danger"> | {{ $errors->first('phone2') }}</span>
                                 @endif
@@ -467,8 +467,9 @@
                                 @endif
                             </label>
                             <select class="form-control edu-fig-select" name="edu_fig">
+                            <option value="" style="display: none;" selected>@lang('main.select')</option>
                                 @foreach($edu_figs as $edu_fig)
-                                    <option value="{{$edu_fig->id}}" selected>@lang('main.'.$edu_fig->name)</option>
+                                    <option value="{{$edu_fig->id}}" >@lang('main.'.$edu_fig->name)</option>
                                 @endforeach
                             </select>
                         </div>
@@ -566,25 +567,14 @@
                 })
                 $('.speciality-select').html(text)
                 $('.speciality-select').val(res[0]?.id)
+                getLangs(res[0]?.id)
 
             })
         })
         $('.speciality-select').on('change', function () {
             var value = this.value
             console.log(this.value)
-            $.ajax({
-                url: '/submit/get-dir-lang/' + value,
-                method: 'GET',
-            }).then(res => {
-                console.log('re', res)
-                var text = '';
-                $.each(res, function (value) {
-                    text += '<option value="' + res[value]?.id + '">' + res[value]?.name + '</option>'
-                })
-                $('.study-language').html(text)
-                $('.study-language').val(res[0]?.id)
-
-            })
+            getLangs(value)
         })
         $('.app-checkbox-1').change(function(){
             if(this.checked){
@@ -598,6 +588,22 @@
                 })
             }
         })
+
+        function getLangs(value){
+            $.ajax({
+                url: '/submit/get-dir-lang/' + value,
+                method: 'GET',
+            }).then(res => {
+                console.log('re', res)
+                var text = '';
+                $.each(res, function (value) {
+                    text += '<option value="' + res[value]?.id + '">' + res[value]?.name + '</option>'
+                })
+                $('.study-language').html(text)
+                $('.study-language').val(res[0]?.id)
+
+            })
+        }
         //         $('select').on('change', function() {
         //   alert( this.value );
         // });

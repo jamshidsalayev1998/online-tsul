@@ -44,7 +44,8 @@ class SubmitController extends Controller
         $countries = Country::where('lang',$lan)->get();
         $learningLangiages = StudyLanguage::where('lang',$lan)->get();
         $specs = Spec::where('lang',$lan)->where('edu_fig_id' , 1)->get();
-        $courses = Course::where('lang',$lan)->get();
+        $courses = Course::where('lang',$lan)->where('code' , 1)->with('course_lang')->get();
+        // return $courses;
         $degrees = Degrees::where('lang',$lan)->where('active', 1)->get();
         $nations = Nationality::where('lang',$lan)->get();
         $certificates = Certificate::where('lang',$lan)->get();
@@ -80,7 +81,7 @@ class SubmitController extends Controller
         $countries = Country::where('lang',$lan)->get();
         $learningLangiages = StudyLanguage::where('lang',$lan)->where('active', 1)->get();
         $eduFig = EduFig::orderBy('id','DESC')->where('id', '!=', 2)->get();
-        $specs = Spec::where('lang',$lan)->where('edu_fig_id' , 1)->get();
+        $specs = Spec::where('lang',$lan)->where('edu_fig_id' , 1)->where('active' , 1)->get();
         $higher = Higher::where('lang',$lan)->get();
         return view('site.submit.overseas',[
             'countries'=>$countries,
@@ -113,6 +114,7 @@ class SubmitController extends Controller
             'passport_copy' => 'required|mimes:pdf',
 //            'image'=>'mimes:png,jpg,jpeg,bmp,gif',
             'phone1' => 'required',
+            'phone2' => 'required',
             'email' => 'required|email',
 
             'background_study'=>'required',
@@ -238,6 +240,7 @@ class SubmitController extends Controller
             'passport_copy' => 'required|mimes:pdf',
 //            'image'=>'mimes:png,jpg,jpeg,bmp,gif',
             'phone1' => 'required',
+            'phone2' => 'required',
             'email' => 'required|email',
 //            'copy_letter' => 'required|mimes:pdf',
 
@@ -383,8 +386,8 @@ class SubmitController extends Controller
 //            return redirect()->route('success',['file'=>$file]);
         }
     }
-   
-   
+
+
     public function success()
     {
         return view('site.submit.success');
@@ -486,7 +489,7 @@ class SubmitController extends Controller
             $lan = 2;
         if (App::isLocale('en'))
             $lan = 3;
-        $specs = Spec::where('lang',$lan)->where('edu_fig_id' , $id)->get();
+        $specs = Spec::where('lang',$lan)->where('edu_fig_id' , $id)->where('active' , 1)->get();
         return \response()->json($specs);
     }
 
@@ -515,6 +518,23 @@ class SubmitController extends Controller
         if (App::isLocale('en'))
             $lan = 3;
         $data = DB::table('tb_mvdir_langs')->select('tb_llang_id')->where('tb_mvdir_id', $id)->where('type', 'bachelor')->get();
+        $k = [];
+
+        foreach ($data as $item => $value){
+            $k[] = $value->tb_llang_id;
+        }
+        $result = StudyLanguage::query()->whereIn('id', $k)->where('lang', $lan)->get()->toArray();
+        return $result;
+    }
+    public function get_dir_lang_mag($id)
+    {
+        if (App::isLocale('uz'))
+            $lan = 1;
+        if (App::isLocale('ru'))
+            $lan = 2;
+        if (App::isLocale('en'))
+            $lan = 3;
+        $data = DB::table('tb_courses_langs')->select('tb_llang_id')->where('course_id', $id)->get();
         $k = [];
 
         foreach ($data as $item => $value){

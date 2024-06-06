@@ -27,7 +27,7 @@ return [
     'applicant_details'=>'ARIZACHINING MA’LUMOTLARI',
     'select_faculty'=>'MUTAXASSISLIK TANLASH',
     'qualifications'=>'O’QUV MALAKASI',
-    'other_info'=>'BOSHQA MA’LUMOTLAR',
+    'other_info'=>'Ta\'limga oid ma\'lumotlar',
     'back'=>'Orqaga',
     'copy_letter'=>'Tavsiya(xat) nusxasi',
     'personal_info'=>'TALABANING SHAXSIY MA’LUMOTLARI',
@@ -60,7 +60,7 @@ return [
     'graduation_year'=>'Tugatgan yili',
     'study_lang'=>'Ta\'lim tili',
     'note'=>'Eslatma',
-    'note_message'=>'SIZ TANLAGAN TILDA SUHBAT OLINISHI MUMKIN',
+    'note_message'=>'SIZ TANLAGAN TILDA SUHBAT OLINADI',
     //tab3
     'background_study'=>'Tamomlagan oliy ta\'lim muassasasi nomi',
     'education'=>'Ta\'lim',

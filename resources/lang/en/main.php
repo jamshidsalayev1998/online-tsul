@@ -66,7 +66,7 @@ return [
     'document_series' => 'Document Series',
     'document_number' => 'Document Number',
     'back_cert_copy' => 'Copy of your diploma (pdf)',
-    'foreign_lang' => 'Foreign language qualifications',
+    'foreign_lang' => 'Foreign language',
     //tab4
     'f_first_name' => 'Father\'s first name',
     'f_last_name' => 'Father\'s last name',
@@ -116,4 +116,5 @@ return [
     'Masofaviy' => 'distant',
     'Sirtqi' => 'part-time',
     'edu_fig' => 'Form of education',
+    'personal_info2' => 'PERSONAL DATA'
 ];

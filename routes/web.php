@@ -15,6 +15,10 @@ Route::group([
         'uses' => 'SubmitController@get_dir_lang',
         'as' => 'get_dir_lang'
     ]);
+    Route::get('/submit/get-dir-lang-mag/{id}', [
+        'uses' => 'SubmitController@get_dir_lang_mag',
+        'as' => 'get_dir_lang_mag'
+    ]);
 
 
     Route::get('/', ['uses' => 'IndexController@index', 'as' => 'index']);
